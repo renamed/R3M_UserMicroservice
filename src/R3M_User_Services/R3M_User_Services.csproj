@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\R3M_User_Domain\R3M_User_Domain.csproj" />
+    <ProjectReference Include="..\R3M_User_ExternalServices\R3M_User_ExternalServices.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>

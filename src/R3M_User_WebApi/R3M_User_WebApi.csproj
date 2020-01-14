@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\R3M_User_ApiModels\R3M_User_ApiModels.csproj" />
+    <ProjectReference Include="..\R3M_User_App\R3M_User_App.csproj" />
+  </ItemGroup>
+
+</Project>
