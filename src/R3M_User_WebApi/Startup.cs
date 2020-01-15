@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using R3M_User_App;
 
 namespace R3M_User_WebApi
 {
@@ -27,6 +28,8 @@ namespace R3M_User_WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.ConfigureApp();
 
             services.AddSwaggerGen(c =>
             {
@@ -60,6 +63,7 @@ namespace R3M_User_WebApi
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
