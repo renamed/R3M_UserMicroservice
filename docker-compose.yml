@@ -1,0 +1,14 @@
+version: "3.4"
+services:
+  webapi:
+    tty: true
+    build: ./src
+    ports:
+      - "7666:80"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+
+  db:
+    build: ./db
