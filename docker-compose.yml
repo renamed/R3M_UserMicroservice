@@ -5,10 +5,18 @@ services:
     build: ./src
     ports:
       - "7666:80"
+    networks:
+      - app-network
     depends_on:
       - db
-    environment:
-      - DATABASE_HOST=db
+    env_file:
+      - web-variables.env
 
   db:
+    networks:
+      - app-network
     build: ./db
+
+networks:
+  app-network:
+    driver: bridge

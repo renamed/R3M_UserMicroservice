@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\R3M_User_Services\R3M_User_Services.csproj" />
     <ProjectReference Include="..\R3M_User_Domain\R3M_User_Domain.csproj" />
+    <ProjectReference Include="..\R3M_User_ApiModels\R3M_User_ApiModels.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
