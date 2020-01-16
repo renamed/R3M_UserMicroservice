@@ -11,11 +11,11 @@ using R3M_User_Domain.Apoio;
 [Produces("application/json")]
 [Route("api/[controller]")]
 [ApiController]
-public class UsuarioController : ControllerBase
+public class UsuariosController : ControllerBase
 {
     private readonly IUsuarioApp _usuarioApp;
 
-    public UsuarioController(IUsuarioApp usuarioApp)
+    public UsuariosController(IUsuarioApp usuarioApp)
     {
         this._usuarioApp = usuarioApp;
     }
@@ -28,8 +28,9 @@ public class UsuarioController : ControllerBase
     /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(typeof(NovoUsuario.Response), 200)]
+    [ProducesResponseType(204)]
     [ProducesResponseType(typeof(ErroGenerico), 400)]
-    public async Task<IActionResult> CriarUsuario(NovoUsuario.Request request)
+    public async Task<IActionResult> CriarUsuario([FromBody] NovoUsuario.Request request)
     {
         try
         {
@@ -54,6 +55,50 @@ public class UsuarioController : ControllerBase
         try
         {
             return Ok(await _usuarioApp.Get(id));
+        }
+        catch (ValidationException valEx)
+        {
+            return BadRequest(new ErroGenerico { Mensagem = valEx.Message });
+        }
+    }
+
+    /// <summary>
+    /// Remove um elemento da base de dados pelo seu id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+
+            if (await _usuarioApp.Delete(id))
+                return Ok(); // 200
+            return Ok(null); // 204
+        }
+        catch (ValidationException valEx)
+        {
+            return BadRequest(new ErroGenerico { Mensagem = valEx.Message });
+        }
+    }
+
+    /// <summary>
+    /// Atualiza um usuário já existente no sistema
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPut]
+    [ProducesResponseType(typeof(AtualizarUsuarioResponse), 200)]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(typeof(ErroGenerico), 400)]
+    public async Task<IActionResult> Update(int id, [FromBody] AtualizarUsuarioRequest usuario)
+    {
+        try
+        {
+            return Ok(await _usuarioApp.Atualizar(id, usuario));
         }
         catch (ValidationException valEx)
         {

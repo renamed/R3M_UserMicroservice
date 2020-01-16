@@ -8,5 +8,7 @@ namespace R3M_User_Service.Interfaces
         Task<Usuario> AdicionarUsuario(Usuario usuario);
 
         Task<Usuario> Get(Usuario usuario);
+        Task<int> Delete(int id);
+        Task<Usuario> Atualizar(Usuario usuario);
     }
 }

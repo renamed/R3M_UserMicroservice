@@ -39,5 +39,23 @@ namespace R3M_User_Service
 
             return await _usuarioExternalService.Adicionar(usuario);
         }
+
+        public async Task<int> Delete(int id)
+        {
+            return await _usuarioExternalService.Delete(id);
+        }
+
+        public async Task<Usuario> Atualizar(Usuario usuario)
+        {
+            if (usuario == null)
+                throw new ValidationException("Usuário não informado");
+
+            usuario.VerificarCampos(false);
+
+            if ((await this.Get(new Usuario { IdUsuario = usuario.IdUsuario })) == null)
+                throw new ValidationException("Usuário não cadastrado");
+
+            return (await _usuarioExternalService.Atualizar(usuario)) == 0 ? null : usuario;
+        }
     }
 }

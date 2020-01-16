@@ -34,6 +34,31 @@ namespace R3M_User_ExternalServices
             }
         }
 
+        public async Task<int> Atualizar(Usuario usuario)
+        {
+            string query = "UPDATE USUARIOS SET Email=@Email,Nome=@Nome,Nascimento=@Nascimento,DtAtualizacao=@DtAtualizacao WHERE IdUsuario=@IdUsuario";
+            using (var conexao = _context.GetConnection())
+            {
+                return await conexao.ExecuteAsync(query, new
+                {
+                    IdUsuario = usuario.IdUsuario,
+                    Nome = usuario.Nome,
+                    Nascimento = usuario.Nascimento,
+                    Email = usuario.Email,
+                    DtAtualizacao = DateTime.UtcNow
+                });
+            }
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            string query = @"DELETE FROM USUARIOS WHERE IdUsuario=@Id";
+            using (var conexao = _context.GetConnection())
+            {
+                return await conexao.ExecuteAsync(query, new { Id = id });
+            }
+        }
+
         public async Task<Usuario> GetByEmail(string email)
         {
             string query = @"SELECT IdUsuario, Email, Senha, Nome, Nascimento FROM USUARIOS WHERE Email=@Email";

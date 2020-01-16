@@ -8,5 +8,7 @@ namespace R3M_User_ExternalServices.Interfaces
         Task<Usuario> GetById(int idUsuario);
         Task<Usuario> GetByEmail(string email);
         Task<Usuario> Adicionar(Usuario usuario);
+        Task<int> Delete(int id);
+        Task<int> Atualizar(Usuario usuario);
     }
 }

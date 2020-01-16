@@ -33,6 +33,30 @@ namespace R3M_User_App
 
         }
 
+        public async Task<AtualizarUsuarioResponse> Atualizar(int id, AtualizarUsuarioRequest usuario)
+        {
+            Usuario novoUsuario = await _usuarioService.Atualizar(new Usuario
+            {
+                IdUsuario = id,
+                Email = usuario.Email,
+                Nascimento = usuario.Nascimento,
+                Nome = usuario.Nome
+            });
+
+            return new AtualizarUsuarioResponse
+            {
+                IdUsuario = novoUsuario.IdUsuario,
+                Email = novoUsuario.Email,
+                Nascimento = novoUsuario.Nascimento,
+                Nome = novoUsuario.Nome
+            };
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            return (await _usuarioService.Delete(id)) == 1;
+        }
+
         public async Task<ObtemUsuarioResponse> Get(int id)
         {
             Usuario usuario = await _usuarioService.Get(new Usuario { IdUsuario = id });

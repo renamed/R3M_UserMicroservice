@@ -17,7 +17,7 @@ namespace R3M_User_Domain
         public string Nome { get; set; }
         public DateTime Nascimento { get; set; }
 
-        public void VerificarCampos()
+        public void VerificarCampos(bool validarSenha = true)
         {
             if (this.Email == null || !Regex.IsMatch(this.Email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"))
                 throw new ValidationException("Email não é válido");
@@ -28,11 +28,14 @@ namespace R3M_User_Domain
             if (this.Nascimento == default || this.Nascimento.ToUniversalTime() >= DateTime.UtcNow)
                 throw new ValidationException("Data de nascimento não é válida");
 
-            if (this._senhaInsegura == null)
-                throw new ValidationException("Senha não informada");
+            if (validarSenha)
+            {
+                if (this._senhaInsegura == null)
+                    throw new ValidationException("Senha não informada");
 
-            if (this._senhaInsegura.Length < 4)
-                throw new ValidationException("Senha muito fraca");
+                if (this._senhaInsegura.Length < 4)
+                    throw new ValidationException("Senha muito fraca");
+            }
         }
 
         public string GetHashSenha()
