@@ -10,5 +10,7 @@ namespace R3M_User_Service.Interfaces
         Task<Usuario> Get(Usuario usuario);
         Task<int> Delete(int id);
         Task<Usuario> Atualizar(Usuario usuario);
+        Task<Token> GerarToken(int idUsuario);
+        Task AtualizarSenha(string hash, string senha);
     }
 }

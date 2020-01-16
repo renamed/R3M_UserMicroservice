@@ -52,9 +52,22 @@ namespace R3M_User_App
             };
         }
 
+        public async Task AtualizarSenha(AtualizacaoSenha.AtualizacaoSenhaRequest request)
+        {
+            await _usuarioService.AtualizarSenha(request.Hash, request.Senha);
+        }
+
         public async Task<bool> Delete(int id)
         {
             return (await _usuarioService.Delete(id)) == 1;
+        }
+
+        public async Task<GeracaoTokenResponse> GerarToken(GeracaoTokenRequest request)
+        {
+            return new GeracaoTokenResponse
+            {
+                Token = (await _usuarioService.GerarToken(request.IdUsuario)).TokenValue
+            };
         }
 
         public async Task<ObtemUsuarioResponse> Get(int id)

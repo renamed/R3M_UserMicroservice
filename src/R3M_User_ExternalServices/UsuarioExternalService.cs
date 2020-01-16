@@ -76,5 +76,18 @@ namespace R3M_User_ExternalServices
                 return await conexao.QueryFirstOrDefaultAsync<Usuario>(query, new { IdUsuario = idUsuario });
             }
         }
+
+        public async Task ModificarSenha(Usuario usuario)
+        {
+            string query = "UPDATE USUARIOS SET Senha=@Senha WHERE IdUsuario=@IdUsuario";
+            using (var conexao = _context.GetConnection())
+            {
+                await conexao.ExecuteAsync(query, new
+                {
+                    IdUsuario = usuario.IdUsuario,
+                    Senha = usuario.Senha
+                });
+            }
+        }
     }
 }

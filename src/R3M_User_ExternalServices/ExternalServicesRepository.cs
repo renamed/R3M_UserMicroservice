@@ -8,8 +8,9 @@ namespace R3M_User_ExternalServices
     {
         public static void ConfigureExternalServices(this IServiceCollection services)
         {
-            services.AddSingleton<IUsuarioExternalService, UsuarioExternalService>();
-            services.AddSingleton<IDbContext, MariaDbContext>();
+            services.AddScoped<IUsuarioExternalService, UsuarioExternalService>();
+            services.AddScoped<ITokenExternalService, TokenExternalService>();
+            services.AddTransient<IDbContext, MariaDbContext>();
         }
     }
 }

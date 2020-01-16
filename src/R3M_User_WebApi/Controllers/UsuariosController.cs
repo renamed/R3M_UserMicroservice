@@ -5,6 +5,7 @@ using R3M_User_ApiModels;
 using System.Threading.Tasks;
 using R3M_User_App.Interfaces;
 using R3M_User_Domain.Apoio;
+using static R3M_User_ApiModels.Usuario.AtualizacaoSenha;
 /// <summary>
 /// Endpoints responsáveis por operações com novos e já existentes usuários
 /// </summary>
@@ -35,6 +36,51 @@ public class UsuariosController : ControllerBase
         try
         {
             return Ok(await _usuarioApp.AdicionarUsuario(request));
+        }
+        catch (ValidationException valEx)
+        {
+            return BadRequest(new ErroGenerico { Mensagem = valEx.Message });
+        }
+    }
+
+    /// <summary>
+    /// Gera um novo token a ser usado para troca de senha
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPost]
+    [Route("token")]
+    [ProducesResponseType(typeof(GeracaoTokenResponse), 200)]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(typeof(ErroGenerico), 400)]
+    public async Task<IActionResult> GerarToken([FromBody] GeracaoTokenRequest request)
+    {
+        try
+        {
+            return Ok(await _usuarioApp.GerarToken(request));
+        }
+        catch (ValidationException valEx)
+        {
+            return BadRequest(new ErroGenerico { Mensagem = valEx.Message });
+        }
+    }
+
+    /// <summary>
+    /// Atualiza a senha de um usuário dado o seu token
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPatch]
+    [Route("token")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(typeof(ErroGenerico), 400)]
+    public async Task<IActionResult> AtualizarSenha([FromBody] AtualizacaoSenhaRequest request)
+    {
+        try
+        {
+            await _usuarioApp.AtualizarSenha(request);
+            return Ok();
         }
         catch (ValidationException valEx)
         {
@@ -105,5 +151,4 @@ public class UsuariosController : ControllerBase
             return BadRequest(new ErroGenerico { Mensagem = valEx.Message });
         }
     }
-
 }
